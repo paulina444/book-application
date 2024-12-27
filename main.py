@@ -15,3 +15,6 @@ from scrapper_reviews import *
 
 #####
 GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
+
+# https://www.goodreads.com/review/list/185192685-paulina?shelf=read

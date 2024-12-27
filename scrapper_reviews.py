@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
 import csv
+import os
 
 class GoodReadsReviewsScrapper:
     @staticmethod
@@ -26,7 +27,11 @@ class GoodReadsReviewsScrapper:
         # znalezienie recenzji
         reviews = driver.find_elements(By.XPATH, "//span[contains(@id, 'freeTextContainerreview')]") 
 
-        with open(user_name+'s_reviews.csv', 'w', newline='') as file:
+        base_path = 'reviews'
+        file_name = user_name+'s_reviews.csv'
+        file_path = os.path.join(base_path, file_name)
+
+        with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file)
             writer.writerow([user_name+"""'s reviews:"""])
             for review in reviews:
