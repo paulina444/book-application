@@ -28,6 +28,7 @@ class GoodReadsReviewsScrapper:
 
         with open(user_name+'s_reviews.csv', 'w', newline='') as file:
             writer = csv.writer(file)
+            writer.writerow([user_name+"""'s reviews:"""])
             for review in reviews:
                 writer.writerow([review.text])
 
