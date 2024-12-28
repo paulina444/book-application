@@ -26,15 +26,18 @@ class GoodReadsReviewsScrapper:
 
         # znalezienie recenzji
         reviews = driver.find_elements(By.XPATH, "//span[contains(@id, 'freeTextContainerreview')]") 
+        authors = driver.find_elements(By.CSS_SELECTOR, "a.authorName")  
+        titles = driver.find_elements(By.CSS_SELECTOR, "a.bookTitle")  
+
 
         base_path = 'reviews'
         file_name = user_name+'s_reviews.csv'
         file_path = os.path.join(base_path, file_name)
 
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
-            writer = csv.writer(file)
-            writer.writerow([user_name+"""'s reviews:"""])
-            for review in reviews:
-                writer.writerow([review.text])
+            writer = csv.writer(file, delimiter=';')
+            writer.writerow(['Book title', "Author", "Review"])
+            for i in range(len(reviews)):
+                writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
 
         driver.quit()
