@@ -1,6 +1,7 @@
 from API import API_BOOKS
 from language_processing import Motives_list
 from reviews_scrapper import *
+from linear_regression import Model
 
 def main():
     # user1_name = input("Enter the nickname of the first user: ")   
@@ -24,9 +25,12 @@ def main():
     #         print("Please, enter your id again, it must be a number.")
 
     # TODO trzeba bedzie wstawic zmienne gdy użyjemy kodu co jest do góry 
-    GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
-    GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-
+    
+    test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+    test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
+    test_file1 = "./" + test_file1
+    test_file2 = "./" + test_file2
+    Model.linear_regression(test_file1, test_file2)
 
 
 

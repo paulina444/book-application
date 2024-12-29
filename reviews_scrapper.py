@@ -41,3 +41,4 @@ class GoodReadsReviewsScrapper:
                 writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
 
         driver.quit()
+        return file_path
