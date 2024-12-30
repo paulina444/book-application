@@ -3,6 +3,8 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 import pandas as pd
 import spacy
+import os
+import csv
 
 class Model:
     def linear_regression(test_file1, test_file2):
@@ -11,8 +13,8 @@ class Model:
 
         df = pd.read_excel(data_file)
 
-        opinie_cyfrowe = df.iloc[:, 0].tolist()
-        opinie_tekstowe = df.iloc[:, 1].tolist()
+        rates = df.iloc[:, 0].tolist()
+        reviews = df.iloc[:, 1].tolist()
 
         # model językowy spaCy
         nlp = spacy.load("en_core_web_sm")
@@ -30,18 +32,19 @@ class Model:
             token_pattern=None        # wyłączone używanie token_pattern, ponieważ mamy własny tokenizer
         )
 
-        X_train = vectorizer.fit_transform(opinie_tekstowe)
+        X_train = vectorizer.fit_transform(reviews)
 
-        y_train = np.array(opinie_cyfrowe)
+        y_train = np.array(rates)
 
         model = LinearRegression()
         model.fit(X_train, y_train)
 
 
         test_df = pd.read_csv(test_file1, encoding="utf-8", sep=';', header=None, skiprows=1)
-        test_df.columns = ['Book', 'Author', 'Review'] 
+        test_df.columns = ['Author', 'Book', 'Review'] 
 
-        test_texts = test_df['Review'].tolist()  
+        test_texts = test_df['Review'].tolist() 
+        book_titles = test_df['Book'].tolist()
         
         print("First user:")
         if not test_texts:
@@ -53,14 +56,33 @@ class Model:
 
         predictions = model.predict(X_test)
 
+
+
+
+        project_dir = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(project_dir)
+        base_path = os.path.join(project_dir, 'prediction')
+
+        file_name = 'user1_predictions.csv'
+        file_path = os.path.join(base_path, file_name)
+
         for prediction in predictions:
             print(f"{prediction}\n")
 
+        with open(file_path, 'w',newline='', encoding='utf-8') as file:
+            writer = csv.writer(file, delimiter=';')
+            writer.writerow(['Book', "Rate"])
+
+            for i in range(len(predictions)):
+                writer.writerow([book_titles[i], predictions[i]])
+      
+
         
         test_df2 = pd.read_csv(test_file2, encoding="utf-8", sep=';', header=None, skiprows=1)
-        test_df2.columns = ['Book', 'Author', 'Review'] 
+        test_df2.columns = ['Author', 'Book', 'Review'] 
 
         test_texts2 = test_df2['Review'].tolist()  
+        book_titles2 = test_df2['Book'].tolist()  
 
         print("Second user:")
         if not test_texts2:
@@ -72,5 +94,19 @@ class Model:
 
         predictions2 = model.predict(X_test2)
 
+
+        file_name = 'user2_predictions.csv'
+        file_path = os.path.join(base_path, file_name)
+
         for prediction2 in predictions2:
-            print(f"{prediction2}\n")
+                print(f"{prediction2}\n")
+
+        with open(file_path, 'w', newline='') as file:   
+            writer = csv.writer(file, delimiter=';')
+            writer.writerow(['Book', "Rate"])
+
+            for i in range(len(predictions2)):
+                writer.writerow([book_titles2[i], predictions2[i]])
+
+    def predict_users_rate():
+        pass

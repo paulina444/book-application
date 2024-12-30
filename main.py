@@ -2,6 +2,7 @@ from API import API_BOOKS
 from language_processing import Motives_list
 from reviews_scrapper import *
 from linear_regression import Model
+from book_matcher import *
 
 def main():
     # user1_name = input("Enter the nickname of the first user: ")   
@@ -28,9 +29,23 @@ def main():
     
     test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
     test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    test_file1 = "./" + test_file1
-    test_file2 = "./" + test_file2
     Model.linear_regression(test_file1, test_file2)
+
+
+
+
+    # title = "Harry Potter and the Chamber of Secrets (Harry Potter, #2)"
+    # author = "J.K. Rowling"
+
+    # title, author, motives, cover = API_BOOKS.get_book_data(title, author)
+
+    # motives = Motives_list.m_list(motives)
+    # print(f"Tytuł: {title}")
+    # print(f"Autor: {author}")
+    # print(f"Motywy: {motives}")
+
+    #BookMatcher.match_favorite_books(185172573, 'agata') # trzeba przekazać liste ulubionych ksiazek i zobaczyc jakie maja motywy idk moze 20% najlepiej ocenianych przez uyytkownika ksiazek
+
 
 
 
