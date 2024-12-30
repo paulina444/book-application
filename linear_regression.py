@@ -45,6 +45,7 @@ class Model:
 
         test_texts = test_df['Review'].tolist() 
         book_titles = test_df['Book'].tolist()
+        book_authors = test_df['Author'].tolist()
         
         print("First user:")
         if not test_texts:
@@ -55,8 +56,6 @@ class Model:
         X_test = vectorizer.transform(test_texts)
 
         predictions = model.predict(X_test)
-
-
 
 
         project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -71,10 +70,10 @@ class Model:
 
         with open(file_path, 'w',newline='', encoding='utf-8') as file:
             writer = csv.writer(file, delimiter=';')
-            writer.writerow(['Book', "Rate"])
+            writer.writerow(['Author','Book', "Rate"])
 
             for i in range(len(predictions)):
-                writer.writerow([book_titles[i], predictions[i]])
+                writer.writerow([book_authors[i], book_titles[i], predictions[i]])
       
 
         
@@ -82,7 +81,8 @@ class Model:
         test_df2.columns = ['Author', 'Book', 'Review'] 
 
         test_texts2 = test_df2['Review'].tolist()  
-        book_titles2 = test_df2['Book'].tolist()  
+        book_titles2 = test_df2['Book'].tolist()
+        book_authors2 = test_df2['Author'].tolist()
 
         print("Second user:")
         if not test_texts2:
@@ -103,10 +103,10 @@ class Model:
 
         with open(file_path, 'w', newline='') as file:   
             writer = csv.writer(file, delimiter=';')
-            writer.writerow(['Book', "Rate"])
+            writer.writerow(['Author','Book', "Rate"])
 
             for i in range(len(predictions2)):
-                writer.writerow([book_titles2[i], predictions2[i]])
+                writer.writerow([book_authors2[i], book_titles2[i], predictions2[i]])
 
     def predict_users_rate():
         pass
