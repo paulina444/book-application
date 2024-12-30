@@ -29,15 +29,30 @@ class GoodReadsReviewsScrapper:
         authors = driver.find_elements(By.CSS_SELECTOR, "a.authorName")  
         titles = driver.find_elements(By.CSS_SELECTOR, "a.bookTitle")  
 
+        project_dir = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(project_dir)
 
-        base_path = 'reviews'
-        file_name = user_name+'s_reviews.csv'
+        base_path = os.path.join(project_dir, 'reviews')
+
+        file_name = user_name + 's_'+ str(user_id) + '_reviews.csv'
         file_path = os.path.join(base_path, file_name)
+
+
+
+
+        # base_path = 'reviews'
+        # file_name = user_name+'s_reviews.csv'
+        # file_path = os.path.join(base_path, file_name)
+        # print("Bieżący katalog roboczy:", os.getcwd())
+        # print(file_path)
+
 
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file, delimiter=';')
-            writer.writerow(['Book title', "Author", "Review"])
+            writer.writerow(['Author', "Book title", "Review"])
+
             for i in range(len(reviews)):
                 writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
 
         driver.quit()
+        return file_path
