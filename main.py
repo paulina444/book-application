@@ -30,17 +30,24 @@ def main():
     
     # test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
     # test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    # Model.linear_regression(test_file1, test_file2)
+    #test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
+    #test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
+    #Model.linear_regression(test_file3, test_file4)
 
+    
     matcher = BookMatcher()
     motives_user1, motives_user2 = matcher.match_favorite_motives()
-    print(motives_user1)
-    print('\n\n')
-    print(motives_user2)
-    favuser2 = GetFavouriteMotives.count_motives(motives_user2)
-    print(favuser2)
+    #print(motives_user1)
+    #print('\n\n')
+    #print(motives_user2)
+    fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
+    print(fav_motive_user1)
+    fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
+    print(fav_motive_user2)
 
+    GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
 
+    
 
     # title = "The Atlas Six"
     # author = "Olivie Blake"
