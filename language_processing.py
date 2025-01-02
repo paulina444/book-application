@@ -18,7 +18,11 @@ class Motives_list:
                     if sub_motive not in modified_list:  
                         modified_list.append(sub_motive)
             elif "," in motive:  
-                for sub_motive in motive.split(","):
+                for sub_motive in motive.split(", "):
+                    if sub_motive not in modified_list:  
+                        modified_list.append(sub_motive)
+            elif "&" in motive:  
+                for sub_motive in motive.split(" & "):
                     if sub_motive not in modified_list:  
                         modified_list.append(sub_motive)
             else:
