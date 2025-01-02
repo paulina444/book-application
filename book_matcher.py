@@ -24,6 +24,7 @@ class BookMatcher:
         
         for i in range(len(favorite_titles_user2)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user2[i], favorite_authors_user2[i]) 
+            print(title)
             fav_motives_user2.append(Motives_list.m_list(motives))
 
         return fav_motives_user1, fav_motives_user2

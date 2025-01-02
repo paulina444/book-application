@@ -3,6 +3,7 @@ from language_processing import Motives_list
 from reviews_scrapper import *
 from linear_regression import Model
 from book_matcher import *
+from motives_list import *
 
 def main():
     # user1_name = input("Enter the nickname of the first user: ")   
@@ -36,6 +37,8 @@ def main():
     print(motives_user1)
     print('\n\n')
     print(motives_user2)
+    favuser2 = GetFavouriteMotives.count_motives(motives_user2)
+    print(favuser2)
 
 
 
