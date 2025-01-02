@@ -18,9 +18,9 @@ class API_BOOKS:
                 book = data['docs'][0]
                 
                 # Wydobywamy informacje o książce
-                title = book.get('title', 'Brak tytułu')
-                author_name = ', '.join(book.get('author_name', ['Brak autora']))
-                motives = book.get('subject', 'Brak motywów')
+                title = book.get('title', '')
+                author_name = ', '.join(book.get('author_name', ['']))
+                motives = book.get('subject', 'No motives')
                 cover_id = book.get('cover_i', None)
                 
                 #print(f"Tytuł: {title}")
