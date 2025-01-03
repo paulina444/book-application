@@ -28,57 +28,54 @@ def main():
 
     # TODO trzeba bedzie wstawic zmienne gdy użyjemy kodu co jest do góry 
     
-    # test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
-    # test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    # test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
-    # test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
+    test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+    #test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
+    
+    
+    #test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
+    #test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
     # Model.linear_regression(test_file3, test_file4)
 
+
+
+
+
+
+
+
+
     
-    matcher = BookMatcher()
-    motives_user1, motives_user2 = matcher.match_favorite_motives()
-    #print(motives_user1)
-    #print('\n\n')
-    #print(motives_user2)
-    fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
-    print(fav_motive_user1)
-    fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
-    print(fav_motive_user2)
+    # matcher = BookMatcher()
+    # motives_user1, motives_user2 = matcher.match_favorite_motives()
 
-    motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
+    # fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
+    # print("słownik motywów 1: " + str(fav_motive_user1))
+    # fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
+    # print("słownik motywów 2: " + str(fav_motive_user2))
+
+    # motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
 
 
-    #TODO UWAGA - get_books_by_motive nie działa jeszcze dla kilku motywów, trzeba będzie zrobić tak, by szukało książkę, która ma kilka wymienionych motywów
-    #jeśli takiej nie znajdzie to niech wyrzuci książki, które mają najwięcej wspólnych motywów
-    #Tak więc jeśli wychodzi w motive_set więcej niż jeden motyw trzeba narazie zakomentować poniższy kod
+    # #TODO UWAGA - get_books_by_motive nie działa jeszcze dla kilku motywów, trzeba będzie zrobić tak, by szukało książkę, która ma kilka wymienionych motywów
+    # #jeśli takiej nie znajdzie to niech wyrzuci książki, które mają najwięcej wspólnych motywów
+    # #Tak więc jeśli wychodzi w motive_set więcej niż jeden motyw trzeba narazie zakomentować poniższy kod
     
-    motive = next(iter(motive_set))
-    #recommended_books = API_BOOKS.get_books_by_motive(motive, limit = 2, max_year = 1990) - przykład jeśli chcemy inną liczbę książek czy roku
-    recommended_books = API_BOOKS.get_books_by_motive(motive)
+    # motive = next(iter(motive_set))
+    # #recommended_books = API_BOOKS.get_books_by_motive(motive, limit = 2, max_year = 1990) - przykład jeśli chcemy inną liczbę książek czy roku
+    # recommended_books = API_BOOKS.get_books_by_motive(motive)
 
-    if isinstance(recommended_books, list):
-        for idx, book in enumerate(recommended_books, start=1):
-            print(f"Książka {idx}:")
-            print(f"Tytuł: {book['title']}")
-            print(f"Autor: {book['author']}")
-            # print(f"Rok publikacji: {book['publish_year']}")
-            # print(f"Okładka: {book['cover_url']}")
-            print("-" * 40)
-    else:
-        print(recommended_books["error"])
+    # if isinstance(recommended_books, list):
+    #     for idx, book in enumerate(recommended_books, start=1):
+    #         print(f"Książka {idx}:")
+    #         print(f"Tytuł: {book['title']}")
+    #         print(f"Autor: {book['author']}")
+    #         # print(f"Rok publikacji: {book['publish_year']}")
+    #         # print(f"Okładka: {book['cover_url']}")
+    #         print("-" * 40)
+    # else:
+    #     print(recommended_books["error"])
     
     
-
-    # title = "The Atlas Six"
-    # author = "Olivie Blake"
-
-    # title, author, motives, cover = API_BOOKS.get_book_data(title, author)
-
-    # motives = Motives_list.m_list(motives)
-    # print(f"Tytuł: {title}")
-    # print(f"Autor: {author}")
-    # print(f"Motywy: {motives}")
-
 
 if __name__ == "__main__":
     main()

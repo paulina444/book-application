@@ -17,42 +17,54 @@ class GoodReadsReviewsScrapper:
         service = Service(ChromeDriverManager().install()) # ChromeDriverManager().install() -pobranie wersji sterownika chromedriver dla google chrome # Service przekazanie lokalizacji sterownika do Selenium
         driver = webdriver.Chrome(service=service, options=chrome_options) # uruchomienie instancji przegladarki
 
-        
-        user_profile_url = f'https://www.goodreads.com/user/show/{str(user_id)}-{user_name}'
+        user_profile_url = f'https://www.goodreads.com/review/list/{str(user_id)}-{user_name}?utf8=%E2%9C%93&utf8=%E2%9C%93&shelf=read&title={user_name}&per_page=infinite'
         driver.get(user_profile_url)
 
-        # załadowanie strony
-        time.sleep(5)
+        time.sleep(3)
 
-        # znalezienie recenzji
-        reviews = driver.find_elements(By.XPATH, "//span[contains(@id, 'freeTextContainerreview')]") 
-        authors = driver.find_elements(By.CSS_SELECTOR, "a.authorName")  
-        titles = driver.find_elements(By.CSS_SELECTOR, "a.bookTitle")  
+        # przycisk settings
+        settings_button = driver.find_element(By.ID, "shelfSettingsLink")
+        settings_button.click()
+        time.sleep(1)
+
+        # przycisk review
+        review_button = driver.find_element(By.ID, "review_field")
+        review_button.click()
+        time.sleep(1)
+
+        # przyciski more - w celu rozwinięcia opinii
+        more_buttons = driver.find_elements(By.XPATH, "//a[contains(text(), '...more')]")
+        for button in more_buttons:
+            driver.execute_script("arguments[0].click();", button)
+            time.sleep(1)
+
+                                                    # opinie bez rozwinięcia                         # pomija opinie, które mają rozwinięcie (none)  # opinie z rozwinięciem                                                                 # przeczytane książki ale bez opini               
+        reviews = driver.find_elements(By.XPATH, "//span[starts-with(@id, 'freeTextContainerreview') and not(contains(@style, 'display: none'))] | //span[starts-with(@id, 'freeTextreview') and not(contains(@style, 'display: none'))] | //td[@class='field review']//span[@class='greyText' and text()='None']")
+
+        authors = driver.find_elements(By.XPATH, "//td[@class='field author']//a")
+        titles = driver.find_elements(By.XPATH, "//td[@class='field title']//a")
 
         project_dir = os.path.dirname(os.path.abspath(__file__))
         os.chdir(project_dir)
-
         base_path = os.path.join(project_dir, 'reviews')
-
         file_name = user_name + 's_'+ str(user_id) + '_reviews.csv'
         file_path = os.path.join(base_path, file_name)
-
-
-
-
-        # base_path = 'reviews'
-        # file_name = user_name+'s_reviews.csv'
-        # file_path = os.path.join(base_path, file_name)
-        # print("Bieżący katalog roboczy:", os.getcwd())
-        # print(file_path)
 
 
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file, delimiter=';')
             writer.writerow(['Author', "Book title", "Review"])
 
+            # for review in reviews:
+            #     print(review.text)
+            # for title in titles:
+            #     print(title.text)
+            # for author in authors:
+            #     print(author.text)
+
             for i in range(len(reviews)):
-                writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
+                if reviews[i].text != "None":
+                    writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
 
         driver.quit()
         return file_path
