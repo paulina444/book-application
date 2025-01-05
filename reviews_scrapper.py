@@ -40,16 +40,21 @@ class GoodReadsReviewsScrapper:
 
                                                     # opinie bez rozwinięcia                         # pomija opinie, które mają rozwinięcie (none)  # opinie z rozwinięciem                                                                 # przeczytane książki ale bez opini               
         reviews = driver.find_elements(By.XPATH, "//span[starts-with(@id, 'freeTextContainerreview') and not(contains(@style, 'display: none'))] | //span[starts-with(@id, 'freeTextreview') and not(contains(@style, 'display: none'))] | //td[@class='field review']//span[@class='greyText' and text()='None']")
-
         authors = driver.find_elements(By.XPATH, "//td[@class='field author']//a")
         titles = driver.find_elements(By.XPATH, "//td[@class='field title']//a")
+
+        # oczyszczenie z znaków nowej lini 
+        cleaned_reviews = []
+        for review in reviews:
+            raw_text = review.text
+            cleaned_text = raw_text.replace('\n', ' ')
+            cleaned_reviews.append(cleaned_text)
 
         project_dir = os.path.dirname(os.path.abspath(__file__))
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'reviews')
         file_name = user_name + 's_'+ str(user_id) + '_reviews.csv'
         file_path = os.path.join(base_path, file_name)
-
 
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file, delimiter=';')
@@ -60,11 +65,11 @@ class GoodReadsReviewsScrapper:
             # for title in titles:
             #     print(title.text)
             # for author in authors:
-            #     print(author.text)
+            #     print(author.text)s
 
             for i in range(len(reviews)):
                 if reviews[i].text != "None":
-                    writer.writerow([authors[i].text, titles[i].text, reviews[i].text])
+                    writer.writerow([authors[i].text, titles[i].text, cleaned_reviews[i]])
 
         driver.quit()
         return file_path

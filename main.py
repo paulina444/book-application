@@ -20,7 +20,7 @@ def main():
 
     # while True:
     #     user2_id = input("Enter the id of the second user: ")
-    #     if user2_id.isdigit():  
+    #     ifgtg user2_id.isdigit():  
     #         user2_id = int(user2_id) 
     #         break  
     #     else:
@@ -28,11 +28,11 @@ def main():
 
     # TODO trzeba bedzie wstawic zmienne gdy użyjemy kodu co jest do góry 
     
-    test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+    #test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
     #test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
     
     
-    #test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
+    test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
     #test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
     # Model.linear_regression(test_file3, test_file4)
 
