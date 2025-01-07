@@ -40,9 +40,9 @@ def main():
     motives_user1, motives_user2 = matcher.match_favorite_motives()
 
     fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
-    print("słownik motywów 1: " + str(fav_motive_user1))
+    #print("słownik motywów 1: " + str(fav_motive_user1))
     fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
-    print("słownik motywów 2: " + str(fav_motive_user2))
+    #print("słownik motywów 2: " + str(fav_motive_user2))
 
     motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
 

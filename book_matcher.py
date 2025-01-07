@@ -14,7 +14,7 @@ class BookMatcher:
 
         for i in range(len(favorite_titles_user1)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user1[i], favorite_authors_user1[i]) 
-            print(title)
+            #print(title)
             if motives != 'No motives': #trzeba sprawdzić czy lista motywów nie jest pusta, bo jeśli jest to bez sensu dodawać książkę
                 fav_motives_user1.append(Motives_list.m_list(motives))
         
@@ -25,7 +25,7 @@ class BookMatcher:
         
         for i in range(len(favorite_titles_user2)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user2[i], favorite_authors_user2[i]) 
-            print(title)
+            #print(title)
             if motives != 'No motives': 
                 fav_motives_user2.append(Motives_list.m_list(motives))
 
