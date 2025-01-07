@@ -31,9 +31,9 @@ class API_BOOKS:
             print(f"Error while downloading data: {response.status_code}")
 
     @staticmethod
-    def get_books_by_motives(motives, files, limit=3, max_year=2024):
+    def get_books_by_motives(motives, limit=3, max_year=2024):
 
-        database_books = IsBookInData.load_books_from_csv(files)
+        database_books = IsBookInData.load_books_from_csv()
 
         motives_str = ','.join(motives)
         url = f"https://openlibrary.org/search.json?subject={motives_str}&sort=new"

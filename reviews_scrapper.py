@@ -7,6 +7,8 @@ import time
 import csv
 import os
 
+
+#TODO zrobic nowego scrappera ktory bdzie pobieral gwiazdki tam gdzie nie ma zadnej recenzji
 class GoodReadsReviewsScrapper:
     @staticmethod
     def scrape_user_reviews(user_id, user_name):
