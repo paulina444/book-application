@@ -1,15 +1,16 @@
 import csv
 
 class IsBookInData:
-    def load_books_from_csv(files):
+    def load_books_from_csv():
         books = []
+        files = ['prediction/user1_predictions.csv', 'prediction/user1_predictions.csv']
         for file in files:
             try:
                 with open(file, newline="", encoding="utf-8") as f:
                     # Ustawienie średnika jako separatora
                     reader = csv.DictReader(f, delimiter=';')
                     for row in reader:
-                        title = row.get("Book title", "").strip()
+                        title = row.get("Book", "").strip()
                         if title:
                             books.append(title)  # Dodajemy tytuł książki
             except FileNotFoundError:

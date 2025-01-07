@@ -44,7 +44,7 @@ class BookMatcher:
         user1_data = pd.read_csv(file_path, encoding="utf-8", sep=';', header=None, skiprows=1)
         user1_data.columns = ['Author','Book','Rate'] 
         num_of_read_books = len(user1_data)
-        num_of_fav_books = math.ceil(0.2 * num_of_read_books) # idk dalam 20% najlepiej ocenianych ksiazek dla danego użytkownika
+        num_of_fav_books = math.ceil(0.5 * num_of_read_books) # idk dalam 20% najlepiej ocenianych ksiazek dla danego użytkownika
         user1_sorted_data = user1_data.sort_values("Rate", ascending=False)
         favorite_books_user1 = user1_sorted_data.head(num_of_fav_books)
     

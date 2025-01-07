@@ -34,7 +34,7 @@ def main():
     test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
 
     Model.linear_regression(test_file3, test_file4)
-
+     # TODO odpalic nowego scrappera i dopisac te ksiazki i oceny do predictions
     
     matcher = BookMatcher()
     motives_user1, motives_user2 = matcher.match_favorite_motives()
@@ -48,8 +48,9 @@ def main():
 
     #recommended_books = API_BOOKS.get_books_by_motives(motive_set)
     
-    recommended_books = API_BOOKS.get_books_by_motives(motive_set, [test_file3, test_file4], limit = 5)
+    recommended_books = API_BOOKS.get_books_by_motives(motive_set, limit = 5)
 
+   
     if isinstance(recommended_books, list):
          for idx, book in enumerate(recommended_books, start=1):
              print(f"Book {idx}:")
