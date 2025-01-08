@@ -3,7 +3,7 @@ import csv
 class IsBookInData:
     def load_books_from_csv():
         books = []
-        files = ['prediction/user1_predictions.csv', 'prediction/user1_predictions.csv']
+        files = ['prediction/user1_predictions.csv', 'prediction/user2_predictions.csv']
         for file in files:
             try:
                 with open(file, newline="", encoding="utf-8") as f:

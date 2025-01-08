@@ -51,7 +51,8 @@ class GoodReadsReviewsScrapper:
             raw_text = review.text
             cleaned_text = raw_text.replace('\n', ' ')
             cleaned_reviews.append(cleaned_text)
-
+            
+        #TODO oczyscici tytul zeby usuwlao to co jest w nawiasie (czesci ksiazki) mozna nowa funkcje
         project_dir = os.path.dirname(os.path.abspath(__file__))
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'reviews')
