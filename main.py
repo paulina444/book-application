@@ -28,42 +28,42 @@ def main():
 
     # TODO trzeba bedzie wstawic zmienne gdy użyjemy kodu co jest do góry 
     
-    #test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
-    #test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
-    test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
+    test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+    test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
+    # test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
+    # test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
 
-    Model.linear_regression(test_file3, test_file4)
-     # TODO odpalic nowego scrappera i dopisac te ksiazki i oceny do predictions
+    # Model.linear_regression(test_file3, test_file4)
+    #  # TODO odpalic nowego scrappera i dopisac te ksiazki i oceny do predictions
     
-    matcher = BookMatcher()
-    motives_user1, motives_user2 = matcher.match_favorite_motives()
+    # matcher = BookMatcher()
+    # motives_user1, motives_user2 = matcher.match_favorite_motives()
 
-    fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
-    #print("słownik motywów 1: " + str(fav_motive_user1))
-    fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
-    #print("słownik motywów 2: " + str(fav_motive_user2))
+    # fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
+    # #print("słownik motywów 1: " + str(fav_motive_user1))
+    # fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
+    # #print("słownik motywów 2: " + str(fav_motive_user2))
 
-    motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
+    # motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
 
-    #recommended_books = API_BOOKS.get_books_by_motives(motive_set)
+    # #recommended_books = API_BOOKS.get_books_by_motives(motive_set)
     
    
-    recommended_books = API_BOOKS.get_books_by_motives(motive_set, limit = 5)
+    # recommended_books = API_BOOKS.get_books_by_motives(motive_set, limit = 5)
 
    
-    if isinstance(recommended_books, list):
-         for idx, book in enumerate(recommended_books, start=1):
-             print(f"Book {idx}:")
-             print(f"Tytuł: {book['title']}")
-             print(f"Autor: {book['author']}")
-             # print(f"Rok publikacji: {book['publish_year']}")
-             # print(f"Okładka: {book['cover_url']}")
-             print(f"Motives of book: {book['all_motives']}")
-             print(book['matching_motives'])
-             print("-" * 40)
-    else:
-         print(recommended_books["error"])
+    # if isinstance(recommended_books, list):
+    #      for idx, book in enumerate(recommended_books, start=1):
+    #          print(f"Book {idx}:")
+    #          print(f"Tytuł: {book['title']}")
+    #          print(f"Autor: {book['author']}")
+    #          # print(f"Rok publikacji: {book['publish_year']}")
+    #          # print(f"Okładka: {book['cover_url']}")
+    #          print(f"Motives of book: {book['all_motives']}")
+    #          print(book['matching_motives'])
+    #          print("-" * 40)
+    # else:
+    #      print(recommended_books["error"])
     
     
 

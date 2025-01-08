@@ -32,7 +32,6 @@ class API_BOOKS:
 
     @staticmethod
     def get_books_by_motives(motives, limit=3, max_year=2024):
-        print(motives)
         database_books = IsBookInData.load_books_from_csv()
 
         motives_str = ','.join(motives)

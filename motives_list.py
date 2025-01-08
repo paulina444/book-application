@@ -19,7 +19,7 @@ class GetFavouriteMotives:
         common_motives = m_user1.keys() & m_user2.keys()
         list_common_motives = list(common_motives)
         
-        # brak wspólnych motywów
+        # gdy brak wspólnych motywów
         if len(list_common_motives) == 0:
             m_user1_sorted = dict(sorted(m_user1.items(), key=lambda item: item[1], reverse=True))
             m_user2_sorted = dict(sorted(m_user2.items(), key=lambda item: item[1], reverse=True))
