@@ -38,6 +38,13 @@ def main():
     user2_name = 'horror1995'
     num2_user = 'user2'
 
+    
+    ''' #jakiś user bez żadnej książki
+    user2_id = 1702015
+    user2_name = 'xsc'
+    num2_user = 'user2'
+    '''
+
     test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(user1_id, user1_name)
     test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(user2_id, user2_name)
 

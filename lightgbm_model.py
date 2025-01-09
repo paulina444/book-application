@@ -6,6 +6,8 @@ import pandas as pd
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 import lightgbm as lgb
+from pandas.errors import EmptyDataError
+import sys
 
 class Model:
 
@@ -53,7 +55,18 @@ class Model:
         model = lgb.train(params, train_data, num_boost_round=100)
 
         # przetwarzanie pierwszego pliku testowego
-        test_df = pd.read_csv(test_file1, encoding="utf-8", sep=';', header=None, skiprows=1)
+        try:
+            test_df = pd.read_csv(test_file1, encoding="utf-8", sep=';', header=None, skiprows=1)
+        except EmptyDataError:
+            print("Plik jest pusty lub nie zawiera danych do przetworzenia.")
+            sys.exit(1)
+        except FileNotFoundError:
+            print("Plik nie został znaleziony. Sprawdź ścieżkę.")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Wystąpił nieoczekiwany błąd: {e}")
+            sys.exit(1)
+        
         test_df.columns = ['Author', 'Book', 'Review']
         test_texts = test_df['Review'].tolist()
         book_titles = test_df['Book'].tolist()
@@ -84,7 +97,18 @@ class Model:
 
             for i in range(len(predictions)):
                 writer.writerow([book_authors[i], book_titles[i], predictions[i]])
-        test_df2 = pd.read_csv(test_file2, encoding="utf-8", sep=';', header=None, skiprows=1)
+        try: 
+            test_df2 = pd.read_csv(test_file2, encoding="utf-8", sep=';', header=None, skiprows=1)
+        except EmptyDataError:
+            print("Plik jest pusty lub nie zawiera danych do przetworzenia.")
+            sys.exit(1)
+        except FileNotFoundError:
+            print("Plik nie został znaleziony. Sprawdź ścieżkę.")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Wystąpił nieoczekiwany błąd: {e}")
+            sys.exit(1)
+
         test_df2.columns = ['Author', 'Book', 'Review']
         test_texts2 = test_df2['Review'].tolist()
         book_titles2 = test_df2['Book'].tolist()
