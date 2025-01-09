@@ -40,7 +40,7 @@ class GoodReadsReviewsScrapper:
         reviews = driver.find_elements(By.XPATH, "//span[starts-with(@id, 'freeTextContainerreview') and not(contains(@style, 'display: none'))] | //span[starts-with(@id, 'freeTextreview') and not(contains(@style, 'display: none'))] | //td[@class='field review']//span[@class='greyText' and text()='None']")
         authors = driver.find_elements(By.XPATH, "//td[@class='field author']//a")
         titles = driver.find_elements(By.XPATH, "//td[@class='field title']//a")
-        GoodReadsReviewsScrapper.scrape_user_starts(driver)
+        stars = GoodReadsReviewsScrapper.scrape_user_starts(driver)
         
         # oczyszczenie tytułów z napisów w nawiasach (napis która część książki)
         cleaned_titles = []
@@ -49,28 +49,29 @@ class GoodReadsReviewsScrapper:
         # oczyszczenie z znaków nowej lini 
         cleaned_reviews = []
         cleaned_reviews = GoodReadsReviewsScrapper.clean_reviews(reviews)
-
         
         project_dir = os.path.dirname(os.path.abspath(__file__))
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'reviews')
         file_name = user_name + 's_'+ str(user_id) + '_reviews.csv'
         file_path = os.path.join(base_path, file_name)
+        
+        file_name2 = user_name + 's_'+ str(user_id) + '_reviews_stars.csv'
+        file_path2 = os.path.join(base_path, file_name2)
 
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file, delimiter=';')
             writer.writerow(['Author', "Book title", "Review"])
 
-            # for review in reviews:
-            #     print(review.text)
-            # for title in titles:
-            #     print(title.text)
-            # for author in authors:
-            #     print(author.text)s
+            with open(file_path2, 'w', newline='', encoding='utf-8') as file2:
+                writer2 = csv.writer(file2, delimiter=';')
+                writer2.writerow(['Author', "Book title", "Stars"])
 
-            for i in range(len(reviews)):
-                if reviews[i].text != "None":
-                    writer.writerow([authors[i].text, cleaned_titles[i], cleaned_reviews[i]])
+                for i in range(len(reviews)):
+                    if reviews[i].text != "None":
+                        writer.writerow([authors[i].text, cleaned_titles[i], cleaned_reviews[i]])
+                    else:
+                        writer2.writerow([authors[i].text, cleaned_titles[i], stars[i]]) 
 
         driver.quit()
         return file_path
@@ -95,9 +96,7 @@ class GoodReadsReviewsScrapper:
     
     @staticmethod
     def scrape_user_starts(driver):
-        # trzeba jakos skipnac te ktore maja opinie
         star_elements = driver.find_elements(By.CSS_SELECTOR, "span.staticStars.notranslate")
-        reviews = driver.find_elements(By.XPATH, "//span[starts-with(@id, 'freeTextContainerreview') and not(contains(@style, 'display: none'))] | //span[starts-with(@id, 'freeTextreview') and not(contains(@style, 'display: none'))]")
 
         star_dict = {
             "it was amazing" : 5,
@@ -111,10 +110,14 @@ class GoodReadsReviewsScrapper:
         for star in star_elements:
             for key, value in star_dict.items():
                 if star.text == key:
-                    star_elements_num.append(value) 
+                    star_elements_num.append(float(value)) 
 
-        print(star_elements_num)
-
+        return star_elements_num
+    
+    # TODO 
+    @staticmethod
+    def delte_files(id, user_name):
+        pass
 
 
 
