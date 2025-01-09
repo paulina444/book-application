@@ -47,7 +47,7 @@ class Model:
         book_titles = test_df['Book'].tolist()
         book_authors = test_df['Author'].tolist()
         
-        print("First user:")
+        #print("First user:")
         if not test_texts:
             print("no texts to evaluate")
             exit()
@@ -65,8 +65,8 @@ class Model:
         file_name = 'user1_predictions.csv'
         file_path = os.path.join(base_path, file_name)
 
-        for prediction in predictions:
-            print(f"{prediction}\n")
+        # for prediction in predictions:
+        #     print(f"{prediction}\n")
 
         with open(file_path, 'w',newline='', encoding='utf-8') as file:
             writer = csv.writer(file, delimiter=';')
@@ -84,7 +84,7 @@ class Model:
         book_titles2 = test_df2['Book'].tolist()
         book_authors2 = test_df2['Author'].tolist()
 
-        print("Second user:")
+        #print("Second user:")
         if not test_texts2:
             print("no texts to evaluate")
             exit()
@@ -98,8 +98,8 @@ class Model:
         file_name = 'user2_predictions.csv'
         file_path = os.path.join(base_path, file_name)
 
-        for prediction2 in predictions2:
-                print(f"{prediction2}\n")
+        # for prediction2 in predictions2:
+        #         print(f"{prediction2}\n")
 
         with open(file_path, 'w', newline='') as file:   
             writer = csv.writer(file, delimiter=';')
@@ -107,6 +107,3 @@ class Model:
 
             for i in range(len(predictions2)):
                 writer.writerow([book_authors2[i], book_titles2[i], predictions2[i]])
-
-    def predict_users_rate():
-        pass

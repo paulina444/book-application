@@ -7,7 +7,6 @@ class API_BOOKS:
     def get_book_data(title, author):
         url = f"https://openlibrary.org/search.json?title={title}&author={author}"
         response = requests.get(url)
-        
         if response.status_code == 200:
             data = response.json()
             
@@ -32,7 +31,6 @@ class API_BOOKS:
 
     @staticmethod
     def get_books_by_motives(motives, limit=3, max_year=2024):
-
         database_books = IsBookInData.load_books_from_csv()
 
         motives_str = ','.join(motives)

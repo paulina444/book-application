@@ -27,27 +27,41 @@ def main():
     #         print("Please, enter your id again, it must be a number.")
 
     # TODO trzeba bedzie wstawic zmienne gdy użyjemy kodu co jest do góry 
-    
-    #test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
-    #test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
-    test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
+    # user1_id = 185385208
+    # user1_name = 'romcom'
+    # num1_user = 'user1'
+    user1_id = 185192685
+    user1_name = 'paulina'
+    num1_user = 'user1'
 
-    Model.linear_regression(test_file3, test_file4)
-     # TODO odpalic nowego scrappera i dopisac te ksiazki i oceny do predictions
-    
+    user2_id = 185382409
+    user2_name = 'horror1995'
+    num2_user = 'user2'
+
+    test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(user1_id, user1_name)
+    test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(user2_id, user2_name)
+
+    # test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')#GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
+    # test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
+    # test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
+    # test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
+
+    Model.linear_regression(test_file1, test_file2)
+    GoodReadsReviewsScrapper.join_files(num1_user,user1_id, user1_name)
+    GoodReadsReviewsScrapper.join_files(num2_user,user2_id, user2_name)
     matcher = BookMatcher()
     motives_user1, motives_user2 = matcher.match_favorite_motives()
 
     fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
-    print("słownik motywów 1: " + str(fav_motive_user1))
+    #print("słownik motywów 1: " + str(fav_motive_user1))
     fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
-    print("słownik motywów 2: " + str(fav_motive_user2))
+    #print("słownik motywów 2: " + str(fav_motive_user2))
 
     motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
 
     #recommended_books = API_BOOKS.get_books_by_motives(motive_set)
     
+   
     recommended_books = API_BOOKS.get_books_by_motives(motive_set, limit = 5)
 
    
