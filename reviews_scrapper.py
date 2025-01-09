@@ -3,6 +3,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import pandas as pd
+import numpy as np
 import time
 import csv
 import os
@@ -62,7 +64,7 @@ class GoodReadsReviewsScrapper:
         with open(file_path, 'w', newline='',encoding = 'utf-8') as file:
             writer = csv.writer(file, delimiter=';')
             writer.writerow(['Author', "Book title", "Review"])
-
+            
             with open(file_path2, 'w', newline='', encoding='utf-8') as file2:
                 writer2 = csv.writer(file2, delimiter=';')
                 writer2.writerow(['Author', "Book title", "Stars"])
@@ -110,10 +112,42 @@ class GoodReadsReviewsScrapper:
         for star in star_elements:
             for key, value in star_dict.items():
                 if star.text == key:
-                    star_elements_num.append(float(value)) 
+                    star_elements_num.append(np.float64(value)) 
 
         return star_elements_num
     
+    def join_files(num_user, user_id, user_name):
+        if num_user == "user1":
+            user = "user1" 
+        else:
+            user = "user2"
+
+        file_name =  user_name + 's_'+ str(user_id) + '_reviews_stars.csv'
+
+        project_dir = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(project_dir)
+        base_path = os.path.join(project_dir, 'reviews')
+        file_name = user_name + "s_" + str(user_id)+ "_reviews_stars.csv"
+        file_path = os.path.join(base_path, file_name)
+        
+        try:
+            stars_df = pd.read_csv(file_path, encoding='utf-8', sep=';', header=None, skiprows=1)
+            stars_df.columns = ['Author', 'Book title', 'Stars']
+            book_author = stars_df['Author'].tolist() 
+            book_titles = stars_df['Book title'].tolist()
+            book_stars = stars_df['Stars'].tolist()
+
+            base_path = os.path.join(project_dir, 'prediction')
+            file_name = user + "_predictions.csv"
+            file_path = os.path.join(base_path, file_name)
+
+            with open(file_path, 'a',  newline="", encoding='utf-8') as file:
+                writer = csv.writer(file, delimiter=';')
+                for i in range(len(book_stars)):
+                    writer.writerow([book_author[i], book_titles[i], book_stars[i]])   
+        except:
+            pass
+
     # TODO 
     @staticmethod
     def delte_files(id, user_name):

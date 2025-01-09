@@ -37,7 +37,6 @@ class BookMatcher:
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'prediction')
 
-
         file1_name = 'user1_predictions.csv'
         file_path = os.path.join(base_path, file1_name)
 

@@ -7,7 +7,6 @@ class API_BOOKS:
     def get_book_data(title, author):
         url = f"https://openlibrary.org/search.json?title={title}&author={author}"
         response = requests.get(url)
-        
         if response.status_code == 200:
             data = response.json()
             
