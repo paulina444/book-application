@@ -1,6 +1,7 @@
 import requests
 from language_processing import *
 from books_user_datasets import *
+import sys
 
 class API_BOOKS:
 
@@ -10,6 +11,11 @@ class API_BOOKS:
         if response.status_code == 200:
             data = response.json()
             
+            title = ""
+            author_name = ""
+            motives = ""
+            cover_id = ""
+
             # sprawdza czy znaleziono książki
             if data['num_found'] > 0:
                 # pierwsza książka z wyników
@@ -26,8 +32,10 @@ class API_BOOKS:
                 return title, author_name, motives, cover_id
             else:
                 print("No books found that match your query.")
+                return title, author_name, motives, cover_id
         else:
-            print(f"Error while downloading data: {response.status_code}")
+            print(f"Error while downloading data: {response.status_code}. Try again.")
+            sys.exit(1)
 
     @staticmethod
     def get_books_by_motives(motives, limit=3, max_year=2024):
