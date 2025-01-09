@@ -1,7 +1,7 @@
 from API import API_BOOKS
 from language_processing import Motives_list
 from reviews_scrapper import *
-from linear_regression import Model
+from lightgbm_model import Model
 from book_matcher import *
 from motives_list import *
 
@@ -46,7 +46,7 @@ def main():
     # test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
     # test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
 
-    Model.linear_regression(test_file1, test_file2)
+    Model.lightgbm_regression(test_file1, test_file2)
     GoodReadsReviewsScrapper.join_files(num1_user,user1_id, user1_name)
     GoodReadsReviewsScrapper.join_files(num2_user,user2_id, user2_name)
     matcher = BookMatcher()
