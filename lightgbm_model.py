@@ -137,8 +137,8 @@ class Model:
             for i in range(len(predictions2)):
                 writer.writerow([book_authors2[i], book_titles2[i], predictions2[i]])
         
-        GoodReadsReviewsScrapper.delte_file(test_file1)
-        GoodReadsReviewsScrapper.delte_file(test_file2)
+        GoodReadsReviewsScrapper.delete_file(test_file1)
+        GoodReadsReviewsScrapper.delete_file(test_file2)
 
 '''
 from sklearn.feature_extraction.text import TfidfVectorizer
