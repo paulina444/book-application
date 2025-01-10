@@ -37,6 +37,9 @@ def main():
     user2_id = 185382409
     user2_name = 'horror1995'
     num2_user = 'user2'
+    # user2_id = 185172573
+    # user2_name = 'agata'
+    # num2_user = 'user2'
 
     
     ''' #jakiś user bez żadnej książki
@@ -48,11 +51,6 @@ def main():
     test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(user1_id, user1_name)
     test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(user2_id, user2_name)
 
-    # test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')#GoodReadsReviewsScrapper.scrape_user_reviews(185172573,'agata')
-    # test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(185192685, 'paulina')
-    # test_file3 = GoodReadsReviewsScrapper.scrape_user_reviews(185385208, 'romcom')
-    # test_file4 = GoodReadsReviewsScrapper.scrape_user_reviews(185382409, 'horror1995')
-
     Model.lightgbm_regression(test_file1, test_file2)
     GoodReadsReviewsScrapper.join_files(num1_user,user1_id, user1_name)
     GoodReadsReviewsScrapper.join_files(num2_user,user2_id, user2_name)
@@ -60,15 +58,9 @@ def main():
     motives_user1, motives_user2 = matcher.match_favorite_motives()
 
     fav_motive_user1 = GetFavouriteMotives.count_motives(motives_user1)
-    #print("słownik motywów 1: " + str(fav_motive_user1))
     fav_motive_user2 = GetFavouriteMotives.count_motives(motives_user2)
-    #print("słownik motywów 2: " + str(fav_motive_user2))
 
     motive_set = GetFavouriteMotives.get_motives_for_both(fav_motive_user1, fav_motive_user2)
-
-    #recommended_books = API_BOOKS.get_books_by_motives(motive_set)
-    
-   
     recommended_books = API_BOOKS.get_books_by_motives(motive_set, limit = 5)
 
    

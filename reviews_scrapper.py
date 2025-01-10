@@ -10,7 +10,6 @@ import csv
 import os
 import re 
 
-#TODO zrobic nowego scrappera ktory bdzie pobieral gwiazdki tam gdzie nie ma zadnej recenzji
 class GoodReadsReviewsScrapper:
     @staticmethod
     def scrape_user_reviews(user_id, user_name):
@@ -20,7 +19,7 @@ class GoodReadsReviewsScrapper:
         user_profile_url = f'https://www.goodreads.com/review/list/{str(user_id)}-{user_name}?utf8=%E2%9C%93&utf8=%E2%9C%93&shelf=read&title={user_name}&per_page=infinite'
         driver.get(user_profile_url)
 
-        time.sleep(3)
+        time.sleep(5)
 
         # przycisk settings
         settings_button = driver.find_element(By.ID, "shelfSettingsLink")
@@ -68,12 +67,12 @@ class GoodReadsReviewsScrapper:
             with open(file_path2, 'w', newline='', encoding='utf-8') as file2:
                 writer2 = csv.writer(file2, delimiter=';')
                 writer2.writerow(['Author', "Book title", "Stars"])
-
                 for i in range(len(reviews)):
                     if reviews[i].text != "None":
                         writer.writerow([authors[i].text, cleaned_titles[i], cleaned_reviews[i]])
                     else:
-                        writer2.writerow([authors[i].text, cleaned_titles[i], stars[i]]) 
+                        if stars[i] != 0:
+                            writer2.writerow([authors[i].text, cleaned_titles[i], stars[i]]) 
 
         driver.quit()
         return file_path
@@ -99,19 +98,28 @@ class GoodReadsReviewsScrapper:
     @staticmethod
     def scrape_user_starts(driver):
         star_elements = driver.find_elements(By.CSS_SELECTOR, "span.staticStars.notranslate")
-
+        result = [(el, el.get_attribute("title")) for el in star_elements]
+    
+        result_string = []
+        for el, title in result:
+            if title:
+                result_string.append(title)
+            else:
+                result_string.append("there is no star")
+        
         star_dict = {
             "it was amazing" : 5,
             "really liked it" : 4,
             "liked it" : 3,
             "it was ok" : 2,
-            "did not like it" : 1
+            "did not like it" : 1,
+            "there is no star": 0
         }
 
         star_elements_num = []
-        for star in star_elements:
+        for star in result_string:
             for key, value in star_dict.items():
-                if star.text == key:
+                if star == key:
                     star_elements_num.append(np.float64(value)) 
 
         return star_elements_num
@@ -122,16 +130,14 @@ class GoodReadsReviewsScrapper:
         else:
             user = "user2"
 
-        file_name =  user_name + 's_'+ str(user_id) + '_reviews_stars.csv'
-
         project_dir = os.path.dirname(os.path.abspath(__file__))
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'reviews')
-        file_name = user_name + "s_" + str(user_id)+ "_reviews_stars.csv"
-        file_path = os.path.join(base_path, file_name)
+        file_name_star = user_name + "s_" + str(user_id)+ "_reviews_stars.csv"
+        file_path_star = os.path.join(base_path, file_name_star)
         
         try:
-            stars_df = pd.read_csv(file_path, encoding='utf-8', sep=';', header=None, skiprows=1)
+            stars_df = pd.read_csv(file_path_star, encoding='utf-8', sep=';', header=None, skiprows=1)
             stars_df.columns = ['Author', 'Book title', 'Stars']
             book_author = stars_df['Author'].tolist() 
             book_titles = stars_df['Book title'].tolist()
@@ -147,11 +153,14 @@ class GoodReadsReviewsScrapper:
                     writer.writerow([book_author[i], book_titles[i], book_stars[i]])   
         except:
             pass
-
-    # TODO 
+        GoodReadsReviewsScrapper.delte_file(file_path_star)
+        
     @staticmethod
-    def delte_files(id, user_name):
-        pass
+    def delte_file(file_path):
+        try:
+            os.remove(file_path)
+        except:
+            pass
 
 
 
