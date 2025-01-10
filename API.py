@@ -49,7 +49,7 @@ class API_BOOKS:
             data = response.json()
 
             # sprawdzenie, czy znaleziono książki
-            if data['num_found'] > 0:
+            if data['num_found'] > limit:
                 books = [
                     book for book in data['docs']
                     if any(year <= max_year for year in (book.get('first_publish_year', []) if isinstance(book.get('first_publish_year', []), list) else [book.get('first_publish_year')]))
@@ -105,7 +105,13 @@ class API_BOOKS:
 
                 return result
             else:
-                return {"error": "No books found that match the themes."}
+                result = API_BOOKS.get_books_by_motives(motives[:-1], limit, max_year=2024)
+                print("motives-1")
+                print(motives[:-1])
+                if result == []:
+                    return {"error": "No books found that match the themes."}
+                else:
+                    return result
         else:
             return {"error": f"Error while downloading data: {response.status_code}"}
 
