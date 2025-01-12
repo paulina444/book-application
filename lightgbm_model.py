@@ -4,16 +4,16 @@ import csv
 import numpy as np
 import pandas as pd
 import spacy
-from sklearn.feature_extraction.text import TfidfVectorizer
 import lightgbm as lgb
 from pandas.errors import EmptyDataError
 import sys
 from reviews_scrapper import *
+from sklearn.model_selection import train_test_split
 
 class Model:
 
     def lightgbm_regression(test_file1, test_file2):
-        data_file = './data_train/train.xlsx'
+        data_file = './data_train/train.xlsx' #lub train2
 
         df = pd.read_excel(data_file)
 
@@ -35,12 +35,16 @@ class Model:
             token_pattern=None
         )
 
-        X_train = vectorizer.fit_transform(reviews)
-        y_train = np.array(rates)
+        X = vectorizer.fit_transform(reviews)
+        y = np.array(rates)
 
-        # Konwersja macierzy na LightGBM Dataset
+        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.1, random_state=42)
+
+        #konwersja macierzy na LightGBM Dataset
         train_data = lgb.Dataset(X_train, label=y_train)
+        valid_data = lgb.Dataset(X_valid, label=y_valid, reference=train_data)
 
+        
         # Parametry LightGBM
         params = {
             'objective': 'regression',
@@ -49,11 +53,11 @@ class Model:
             'learning_rate': 0.1,
             'num_leaves': 31,
             'max_depth': -1,
-            'verbosity': 0,  # Wycisz komunikaty
+            'verbosity': 0,  # wycisz komunikaty
+            'feature_fraction': 0.8,
         }
 
-        # Trening modelu
-        model = lgb.train(params, train_data, num_boost_round=100)
+        model = lgb.train(params, train_data, num_boost_round=1000,valid_sets=[valid_data])
 
         # przetwarzanie pierwszego pliku testowego
         try:
