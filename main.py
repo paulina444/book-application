@@ -1,7 +1,8 @@
 from API import API_BOOKS
 from language_processing import Motives_list
 from reviews_scrapper import *
-from lightgbm_model import Model
+from lightgbm_model import *
+from model_bert import *
 from book_matcher import *
 from motives_list import *
 
@@ -20,7 +21,7 @@ def main():
 
     # while True:
     #     user2_id = input("Enter the id of the second user: ")
-    #     ifgtg user2_id.isdigit():  
+    #     if user2_id.isdigit():  
     #         user2_id = int(user2_id) 
     #         break  
     #     else:
@@ -30,16 +31,26 @@ def main():
     # user1_id = 185385208
     # user1_name = 'romcom'
     # num1_user = 'user1'
+    '''
     user1_id = 185192685
     user1_name = 'paulina'
     num1_user = 'user1'
+    '''
 
+    user1_id = 185382409
+    user1_name = 'horror1995'
+    num1_user = 'user1'
+
+    
+    '''
     user2_id = 185382409
     user2_name = 'horror1995'
     num2_user = 'user2'
-    # user2_id = 185172573
-    # user2_name = 'agata'
-    # num2_user = 'user2'
+    '''
+
+    user2_id = 165736606
+    user2_name = 'lexi'
+    num2_user = 'user2'
 
     
     ''' #jakiś user bez żadnej książki
@@ -51,7 +62,10 @@ def main():
     test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(user1_id, user1_name)
     test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(user2_id, user2_name)
 
-    Model.lightgbm_regression(test_file1, test_file2)
+    # Model.lightgbm_regression(test_file1, test_file2)
+    # Model_Bert.train_bert()
+    Model_Bert.bert(test_file1, test_file2)
+
     GoodReadsReviewsScrapper.join_files(num1_user,user1_id, user1_name)
     GoodReadsReviewsScrapper.join_files(num2_user,user2_id, user2_name)
     matcher = BookMatcher()
@@ -65,14 +79,14 @@ def main():
 
    
     if isinstance(recommended_books, list):
+         print(f"Your common favorite motifs {motive_set} \n")
          for idx, book in enumerate(recommended_books, start=1):
              print(f"Book {idx}:")
-             print(f"Tytuł: {book['title']}")
-             print(f"Autor: {book['author']}")
+             print(f"Title: {book['title']}")
+             print(f"Author: {book['author']}")
              # print(f"Rok publikacji: {book['publish_year']}")
              # print(f"Okładka: {book['cover_url']}")
-             print(f"Motives of book: {book['all_motives']}")
-             print(book['matching_motives'])
+             print(f"Motifs in the book: {book['all_motives']}")
              print("-" * 40)
     else:
          print(recommended_books["error"])

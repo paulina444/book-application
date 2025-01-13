@@ -128,7 +128,8 @@ class GoodReadsReviewsScrapper:
         for star in result_string:
             for key, value in star_dict.items():
                 if star == key:
-                    star_elements_num.append(np.float64(value)) 
+                    #star_elements_num.append(np.float64(value)) 
+                    star_elements_num.append(value)
 
         return star_elements_num
     
