@@ -11,4 +11,4 @@ pip install openpyxl\
 pip install datasets\
 pip install transformers\
 pip install pandas\
-pip install torch\
+pip install torch
