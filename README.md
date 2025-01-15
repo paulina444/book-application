@@ -9,6 +9,6 @@ pip install webdriver-manager\
 pip install selenium\
 pip install openpyxl\
 pip install datasets\
-pip install transformers\ 
+pip install transformers\
 pip install pandas\
 pip install torch\
