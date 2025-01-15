@@ -32,27 +32,26 @@ def main():
     # user1_id = 185385208
     # user1_name = 'romcom'
 
-    '''
-    user1_id = 185192685
-    user1_name = 'paulina'
-    '''
-    
+        
     '''
     user2_id = 185382409
     user2_name = 'horror1995'
+    '''
+
+    # user2_id = 165736606
+    # user2_name = 'lexi'
+
+
+
+    '''
+    user1_id = 185192685
+    user1_name = 'paulina'
     '''
 
     ''' #jakiś user bez żadnej książki
     user2_id = 1702015
     user2_name = 'xsc'
     '''
-
-    # user1_id = 185382409
-    # user1_name = 'horror1995'
-
-
-    # user2_id = 165736606
-    # user2_name = 'lexi'
 
     test_file1 = GoodReadsReviewsScrapper.scrape_user_reviews(user1_id, user1_name)
     test_file2 = GoodReadsReviewsScrapper.scrape_user_reviews(user2_id, user2_name)
