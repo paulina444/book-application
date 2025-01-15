@@ -4,11 +4,11 @@ A program for two users that, based on reviews from GoodReads, will find a book 
 
 
 
-Libraries needed:
-pip install webdriver-manager
-pip install selenium
-pip install openpyxl
-pip install datasets
-pip install transformers 
-pip install pandas 
-pip install torch
+Libraries needed:\
+pip install webdriver-manager\
+pip install selenium\
+pip install openpyxl\
+pip install datasets\
+pip install transformers\ 
+pip install pandas\
+pip install torch\
