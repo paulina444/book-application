@@ -6,6 +6,7 @@ from model_bert import *
 from book_matcher import *
 from motives_list import *
 
+
 def main():
     user1_name = input("\n\nEnter the nickname of the first user: ")   
 
@@ -40,6 +41,9 @@ def main():
 
     # user2_id = 165736606
     # user2_name = 'lexi'
+
+    #user2_id = 174078234
+    # user2_name = 'riana-from-kelsier-s-crew'
 
 
 
