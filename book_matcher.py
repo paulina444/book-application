@@ -14,7 +14,7 @@ class BookMatcher:
 
         for i in range(len(favorite_titles_user1)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user1[i], favorite_authors_user1[i]) 
-            #print(title)
+
             if title == '' or author == '':
                 continue
             if motives != 'No motives': 
@@ -27,7 +27,7 @@ class BookMatcher:
         
         for i in range(len(favorite_titles_user2)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user2[i], favorite_authors_user2[i]) 
-            #print(title)
+        
             if title == '' or author == '':
                 continue
             if motives != 'No motives': 

@@ -23,8 +23,7 @@ class GetFavouriteMotives:
         if len(list_common_motives) == 0:
             m_user1_sorted = dict(sorted(m_user1.items(), key=lambda item: item[1], reverse=True))
             m_user2_sorted = dict(sorted(m_user2.items(), key=lambda item: item[1], reverse=True))
-            # print("slownik 1: " + str(m_user1_sorted))
-            # print("slownik 2:" + str(m_user2_sorted))
+
             if len(m_user1) > len(m_user2):
                 num = len(m_user2)
             else:
