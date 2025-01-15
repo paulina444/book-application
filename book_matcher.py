@@ -14,8 +14,10 @@ class BookMatcher:
 
         for i in range(len(favorite_titles_user1)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user1[i], favorite_authors_user1[i]) 
-            print(title)
-            if motives != 'No motives': #trzeba sprawdzić czy lista motywów nie jest pusta, bo jeśli jest to bez sensu dodawać książkę
+
+            if title == '' or author == '':
+                continue
+            if motives != 'No motives': 
                 fav_motives_user1.append(Motives_list.m_list(motives))
         
 
@@ -25,7 +27,9 @@ class BookMatcher:
         
         for i in range(len(favorite_titles_user2)):
             title, author, motives, cover = API_BOOKS.get_book_data(favorite_titles_user2[i], favorite_authors_user2[i]) 
-            print(title)
+        
+            if title == '' or author == '':
+                continue
             if motives != 'No motives': 
                 fav_motives_user2.append(Motives_list.m_list(motives))
 
@@ -37,14 +41,13 @@ class BookMatcher:
         os.chdir(project_dir)
         base_path = os.path.join(project_dir, 'prediction')
 
-
         file1_name = 'user1_predictions.csv'
         file_path = os.path.join(base_path, file1_name)
 
         user1_data = pd.read_csv(file_path, encoding="utf-8", sep=';', header=None, skiprows=1)
         user1_data.columns = ['Author','Book','Rate'] 
         num_of_read_books = len(user1_data)
-        num_of_fav_books = math.ceil(0.5 * num_of_read_books) # idk dalam 20% najlepiej ocenianych ksiazek dla danego użytkownika
+        num_of_fav_books = math.ceil(0.2 * num_of_read_books) 
         user1_sorted_data = user1_data.sort_values("Rate", ascending=False)
         favorite_books_user1 = user1_sorted_data.head(num_of_fav_books)
     
